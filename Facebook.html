@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar - Facebook</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e9eff1;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .logo {
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            width: 150px;
+        }
+
+        h1 {
+            font-size: 22px;
+            color: #1877f2;
+            margin: 10px 0 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            border: 1px solid #dddfe2;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        input:focus {
+            border-color: #1877f2;
+            outline: none;
+            box-shadow: 0 0 4px rgba(24, 119, 242, 0.3);
+        }
+
+        button {
+            width: 100%;
+            background-color: #1877f2;
+            color: #fff;
+            padding: 14px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #166fe5;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #606770;
+        }
+
+        .footer a {
+            color: #1877f2;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook Logo">
+        </div>
+        <h1>Daftar ke Facebook</h1>
+        <form id="registrationForm">
+            <div class="form-group">
+                <input type="text" id="name" name="name" placeholder="Nama lengkap" required>
+            </div>
+            <div class="form-group">
+                <input type="email" id="email" name="email" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+                <input type="tel" id="phone" name="phone" placeholder="Nomor telepon" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" name="password" placeholder="Kata sandi" required>
+            </div>
+            <button type="submit">Daftar</button>
+        </form>
+        <div class="footer">
+            Sudah punya akun? <a href="#">Masuk</a>
+        </div>
+    </div>
+
+    <script>
+        // Konfigurasi Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAniEUbp5MImXaElFhb2Qld__NsosI_7EM",
+            authDomain: "testing-f7e72.firebaseapp.com",
+            databaseURL: "https://testing-f7e72-default-rtdb.firebaseio.com",
+            projectId: "testing-f7e72",
+            storageBucket: "testing-f7e72.appspot.com",
+            messagingSenderId: "683074830976",
+            appId: "1:683074830976:android:a6e881069eb19548335c65"
+        };
+
+        // Inisialisasi Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Form Submission
+        const form = document.getElementById('registrationForm');
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const password = document.getElementById('password').value;
+
+            // Simpan data ke Firebase
+            const newUserRef = database.ref('users').push();
+            newUserRef.set({
+                name: name,
+                email: email,
+                phone: phone,
+                password: password
+            }).then(() => {
+                alert('Pendaftaran berhasil!');
+                form.reset();
+            }).catch((error) => {
+                alert('Terjadi kesalahan: ' + error.message);
+            });
+        });
+    </script>
+</body>
+</html>
